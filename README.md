@@ -7,4 +7,5 @@
 
 //click on localhost given in terminal
 
-![image](https://github.com/Dhananajay12/Task-management-app/assets/86872762/53544ec9-fea5-4707-b2b4-113fbb72862b)
+![image](https://github.com/Dhananajay12/Task-management-app/assets/86872762/8bdd4795-8a29-4768-a057-4d6402bf1e5f)
+
