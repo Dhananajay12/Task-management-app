@@ -20,7 +20,7 @@ const TaskList: FC<Task> = ({ tasks, setAllTask, completedTask, setCompletedTask
 		<div>
 
 			<div className='container flex gap-2'>
-				<div className=' p-2 w-[39%]  flex-col rounded'>
+				<div className='bg-[#4d4d4d]  p-2 w-[40%]  flex-col rounded'>
 					<Droppable droppableId="TaskAdded">
 						{
 							(provided) => (
