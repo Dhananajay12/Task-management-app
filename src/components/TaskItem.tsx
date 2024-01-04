@@ -71,8 +71,8 @@ const SingleTask: FC<Props> = ({ task, tasks, setAllTask, index, drop }) => {
 						</div>
 
 						<div className='flex'>
-
-							<p className='text-white' onClick={(e) => {
+							<p className='text-white ml-4 bg-[#121212] p-2 px-4 rounded'>{task.priority}</p>
+							<p className='text-white ml-4' onClick={(e) => {
 								handleUpdate(e, task.id)
 								setIsEdit(!isEdit)
 							}}><Pencil /></p>
