@@ -27,7 +27,7 @@ const TaskList: FC<Task> = ({ tasks, setAllTask, completedTask, setCompletedTask
 								<div className='bg-[#4d4d4d] p-2 h-full' ref={provided.innerRef} {...provided.droppableProps}>
 									<h1 className='text-white'>Added task</h1>
 									{tasks.map((item, index) => (
-										<SingleTask task={item} setAllTask={setAllTask} key={item.id} index={index} tasks={tasks} />
+										<SingleTask task={item} setAllTask={setAllTask} key={item.id} index={index} tasks={tasks} drop="TaskAdded" />
 									))
 									}
 									{provided.placeholder}
@@ -43,7 +43,7 @@ const TaskList: FC<Task> = ({ tasks, setAllTask, completedTask, setCompletedTask
 								<div className='bg-[#4d4d4d] p-2  h-full' ref={provided.innerRef} {...provided.droppableProps}>
 									<h1 className='text-white'>Started task</h1>
 									{activeTasks.map((item, index) => (
-										<SingleTask task={item} setAllTask={setActiveTasks} key={item.id} index={index} tasks={activeTasks}  />
+										<SingleTask task={item} setAllTask={setActiveTasks} key={item.id} index={index} tasks={activeTasks} drop="TaskActive" />
 									))
 									}
 									{provided.placeholder}
@@ -59,7 +59,7 @@ const TaskList: FC<Task> = ({ tasks, setAllTask, completedTask, setCompletedTask
 								<div className='bg-[#4d4d4d] p-2  h-full' ref={provided.innerRef} {...provided.droppableProps}>
 									<h1 className='text-white'>Completed Task</h1>
 									{completedTask.map((item, index) => (
-										<SingleTask task={item} setAllTask={setCompletedTask} key={item.id} index={index} tasks={completedTask}  />
+										<SingleTask task={item} setAllTask={setCompletedTask} key={item.id} index={index} tasks={completedTask} drop="TaskCompleted" />
 									))
 									}
 									{provided.placeholder}

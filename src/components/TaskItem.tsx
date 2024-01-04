@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react'
 import { TaskAll } from '../models/models'
 import { Check, Edit, Pencil, Trash2 } from 'lucide-react';
 import { Draggable } from 'react-beautiful-dnd';
+import { setLocalStorageData } from '../helper/Helper';
 
 interface Props {
 	task: TaskAll,
@@ -9,10 +10,11 @@ interface Props {
 	key: number,
 	index: number,
 	setAllTask: React.Dispatch<React.SetStateAction<TaskAll[]>>,
+	drop: string
 }
 
 
-const SingleTask: FC<Props> = ({ task, tasks, setAllTask, index }) => {
+const SingleTask: FC<Props> = ({ task, tasks, setAllTask, index, drop }) => {
 
 	const [isEdit, setIsEdit] = useState<Boolean>(false);
 	const [taskData, setTaskData] = useState(task.task);
@@ -21,14 +23,17 @@ const SingleTask: FC<Props> = ({ task, tasks, setAllTask, index }) => {
 	const handleUpdate = (e: React.FormEvent, id: number) => {
 		e.preventDefault();
 		setAllTask(tasks.map((t) => t.id === id ? { ...t, task: taskData } : t))
+		setLocalStorageData(drop, tasks.map((t) => t.id === id ? { ...t, task: taskData } : t))
 		setIsEdit(false)
 	}
 
 	const handleDelete = (id: number) => {
 		setAllTask(tasks.filter(task => task.id !== id))
+		setLocalStorageData(drop, tasks.filter(task => task.id !== id))
 	}
 	const handleDone = (id: number) => {
 		setAllTask(tasks.map((task) => task.id === id ? { ...task, isDone: !task.isDone } : task))
+		setLocalStorageData(drop, tasks.map((task) => task.id === id ? { ...task, isDone: !task.isDone } : task))
 	}
 
 	useEffect(() => {
@@ -45,7 +50,7 @@ const SingleTask: FC<Props> = ({ task, tasks, setAllTask, index }) => {
 					ref={provided.innerRef}
 				>
 					<form onSubmit={(e) => handleUpdate(e, task.id)} className='flex justify-between w-full pr-1'>
-						<div className="input-field-style " >
+						<div className="input-field-style flex-wrap" >
 
 							{isEdit ? (
 								<input
@@ -57,17 +62,17 @@ const SingleTask: FC<Props> = ({ task, tasks, setAllTask, index }) => {
 							) : task.isDone ? (
 								<s className='text-white'>{task.task}</s>
 							) : (
-								<span className='text-white'>{task.task}</span>
+								<span className='text-white  flex-wrap'>{task.task}</span>
 							)}
 						</div>
 
-						<div  className='flex'>
+						<div className='flex'>
 
-							<p  className='text-white' onClick={(e) => {
+							<p className='text-white' onClick={(e) => {
 								handleUpdate(e, task.id)
 								setIsEdit(!isEdit)
 							}}><Pencil /></p>
-							<p  className='text-white ml-3' onClick={() => { handleDelete(task.id) }}><Trash2 /></p>
+							<p className='text-white ml-3' onClick={() => { handleDelete(task.id) }}><Trash2 /></p>
 							<p className='text-white  ml-3' onClick={() => { handleDone(task.id) }}><Check /></p>
 						</div>
 					</form>
