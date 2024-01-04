@@ -22,18 +22,22 @@ const SingleTask: FC<Props> = ({ task, tasks, setAllTask, index, drop }) => {
 
 	const handleUpdate = (e: React.FormEvent, id: number) => {
 		e.preventDefault();
-		setAllTask(tasks.map((t) => t.id === id ? { ...t, task: taskData } : t))
-		setLocalStorageData(drop, tasks.map((t) => t.id === id ? { ...t, task: taskData } : t))
+		const data = tasks.map((t) => t.id === id ? { ...t, task: taskData } : t)
+		setAllTask(data)
+		setLocalStorageData(drop, data)
 		setIsEdit(false)
 	}
 
 	const handleDelete = (id: number) => {
-		setAllTask(tasks.filter(task => task.id !== id))
-		setLocalStorageData(drop, tasks.filter(task => task.id !== id))
+		const data = tasks.filter(task => task.id !== id)
+		setAllTask(data)
+		setLocalStorageData(drop, data)
+
 	}
 	const handleDone = (id: number) => {
-		setAllTask(tasks.map((task) => task.id === id ? { ...task, isDone: !task.isDone } : task))
-		setLocalStorageData(drop, tasks.map((task) => task.id === id ? { ...task, isDone: !task.isDone } : task))
+		const data = tasks.map((task) => task.id === id ? { ...task, isDone: !task.isDone } : task)
+		setAllTask(data)
+		setLocalStorageData(drop, data)
 	}
 
 	useEffect(() => {

@@ -15,11 +15,9 @@ interface Task {
 
 const TaskList: FC<Task> = ({ tasks, setAllTask, completedTask, setCompletedTask, activeTasks, setActiveTasks }) => {
 
-
 	return (
 		<div>
-
-			<div className='container flex gap-2'>
+			<div className='flex gap-2'>
 				<div className='bg-[#4d4d4d]  p-2 w-[40%]  flex-col rounded'>
 					<Droppable droppableId="TaskAdded">
 						{
