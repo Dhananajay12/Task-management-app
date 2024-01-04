@@ -5,13 +5,16 @@ import { TaskAll } from './models/models';
 import TaskList from './components/TaskList';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
-import { useDispatch } from 'react-redux';
-import { getLocalStorageData, setLocalStorageData } from './helper/helper';
+import { CalculatePriority, getLocalStorageData, setLocalStorageData } from './helper/Helper';
+
+
 
 
 function App() {
 
 	const [task, setTask] = useState<string>('');
+	const [date, setDate] = useState<string>('');
+
 
 	const [allTask, setAllTask] = useState<TaskAll[]>([]);
 	const [activeTasks, setAciveTasks] = useState<TaskAll[]>([]);
@@ -22,21 +25,13 @@ function App() {
 		e.preventDefault();
 
 		if (task) {
-			setAllTask([...allTask, { id: Date.now(), task, isDone: false }])
-			setLocalStorageData('TaskAdded', [...allTask, { id: Date.now(), task, isDone: false }])
+		
+			const priority = CalculatePriority(date);
+			setAllTask([...allTask, { id: Date.now(), task, isDone: false, priority }])
+			setLocalStorageData('TaskAdded', [...allTask, { id: Date.now(), task, isDone: false, priority: priority }])
 			setTask('')
 		}
 	}
-
-	useEffect(() => {
-		const storedAllTasks = getLocalStorageData('TaskAdded');
-		const storedActiveTasks = getLocalStorageData('TaskActive');
-		const storedCompletedTasks = getLocalStorageData('TaskCompleted');
-
-		setAllTask(storedAllTasks ?? []);
-		setAciveTasks(storedActiveTasks ?? []);
-		setCompletedTask(storedCompletedTasks ?? []);
-	}, []);
 
 	const onDragEnd = async (event: DropResult) => {
 		const { destination, source } = event;
@@ -80,6 +75,15 @@ function App() {
 
 	}
 
+	useEffect(() => {
+		const storedAllTasks = getLocalStorageData('TaskAdded');
+		const storedActiveTasks = getLocalStorageData('TaskActive');
+		const storedCompletedTasks = getLocalStorageData('TaskCompleted');
+
+		setAllTask(storedAllTasks ?? []);
+		setAciveTasks(storedActiveTasks ?? []);
+		setCompletedTask(storedCompletedTasks ?? []);
+	}, []);
 
 	return (
 		<>
@@ -87,7 +91,8 @@ function App() {
 
 				<div className=''>
 					<h1 className='text-white text-3xl'>Task Management</h1>
-					<InputFiled task={task} setTask={setTask} handleChange={handleSubmit} />
+					<InputFiled task={task} setTask={setTask} handleChange={handleSubmit} setDate={setDate} date={date}/>
+					
 					<TaskList
 						tasks={allTask}
 						setAllTask={setAllTask}

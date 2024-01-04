@@ -39,12 +39,12 @@ const SingleTask: FC<Props> = ({ task, tasks, setAllTask, index }) => {
 	return (
 		<Draggable draggableId={task.id.toString()} index={index}>
 			{(provided) => (
-				<div className='w-[100%] bg-black p-4 rounded mt-4 min-h-[50px]'
+				<div className={`w-[100%] bg-black p-4 rounded mt-4 min-h-[50px]`}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}
 				>
-					<form onSubmit={(e) => handleUpdate(e, task.id)} style={{ display: 'flex', justifyContent: 'space-between', width: '100%', paddingRight: '1rem' }}>
+					<form onSubmit={(e) => handleUpdate(e, task.id)} className='flex justify-between w-full pr-1'>
 						<div className="input-field-style " >
 
 							{isEdit ? (
@@ -61,14 +61,14 @@ const SingleTask: FC<Props> = ({ task, tasks, setAllTask, index }) => {
 							)}
 						</div>
 
-						<div style={{ display: "flex" }}>
+						<div  className='flex'>
 
-							<p style={{ marginLeft: "1rem" }} className='text-white' onClick={(e) => {
+							<p  className='text-white' onClick={(e) => {
 								handleUpdate(e, task.id)
 								setIsEdit(!isEdit)
 							}}><Pencil /></p>
-							<p style={{ marginLeft: "1rem" }} className='text-white' onClick={() => { handleDelete(task.id) }}><Trash2 /></p>
-							<p style={{ marginLeft: "1rem" }} className='text-white' onClick={() => { handleDone(task.id) }}><Check /></p>
+							<p  className='text-white ml-3' onClick={() => { handleDelete(task.id) }}><Trash2 /></p>
+							<p className='text-white  ml-3' onClick={() => { handleDone(task.id) }}><Check /></p>
 						</div>
 					</form>
 				</div>
